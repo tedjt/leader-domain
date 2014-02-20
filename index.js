@@ -28,12 +28,15 @@ function plugin () {
     var disposable = isDisposable(email);
     var domain = email.split('@')[1];
     person.domain = person.domain || {};
-    extend(true, person.domain, {
+    var interesting = person.domain.interesting || (!personal && !disposable);
+    var domainInfo = {
       name: domain,
       personal: personal,
-      disposable: disposable
-    });
-    domain.interesting = domain.interesting || (!personal && !disposable);
+      disposable: disposable,
+      interesting: interesting
+    };
+    extend(true, person.domain, domainInfo);
+    extend(true, context, { domain: domainInfo });
     next();
   };
 }
