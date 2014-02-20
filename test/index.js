@@ -43,4 +43,18 @@ describe('leader-domain', function () {
     });
   });
 
+  it('should recognize company domains', function (done) {
+    var person = { email: 'joe@apiary.com' };
+    var context = {};
+    plugin.fn(person, context, function (err) {
+      if (err) return done(err);
+      var domain = person.domain;
+      assert(!domain.personal);
+      assert(!domain.disposable);
+      assert(domain.interesting);
+      done();
+    });
+  });
+
+
 });
